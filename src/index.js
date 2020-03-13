@@ -31,7 +31,8 @@ function expressionCalculator(expr) {
   }
   while(op_stack.length != 0) doOperations();
   let ret = num_stack.pop();
- // if(ret != Math.trunc(ret)) ret = ret.toFixed(4);
+  num_stack = [];
+  op_stack = [];
   return ret;
 }
 
@@ -45,7 +46,11 @@ function calculateOperation(arg1, arg2, op) {
   case '*':
     res = arg1 * arg2; break;  
   case '/':
-    if(arg2 == 0) throw new Error("TypeError: Division by zero.");
+    if(arg2 == 0) {
+      num_stack = [];
+      op_stack = [];
+      throw new Error("TypeError: Division by zero.");
+    }
     res = arg1 / arg2; 
   }
   return res;
